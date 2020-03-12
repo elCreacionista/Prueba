@@ -10,7 +10,7 @@ public class MapGenerator {
         this.x = height;
         this.y = width;
         GenerateMapa();
-       // while (!ContarCosas(100,500,600,400)){GenerateMapa();}
+        while (!ContarCosas(60,0,60,0)){GenerateMapa();}
     }
 
     private boolean ContarCosas(int min_bosque, int min_rio, int min_mar, int min_monte){
@@ -119,7 +119,7 @@ public class MapGenerator {
         crearMontes(100, 300);
 
         //GENERADOR DE BOSQUES
-        crearBosques(30, 300);
+        crearBosques(5, 3);
 
         //ESTABILIZADOR DE TERRENO
         for (int i = 0; i < x; i++) {

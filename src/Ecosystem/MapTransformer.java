@@ -21,8 +21,10 @@ public class MapTransformer {
                     case 1:
                     case 2:
                     case 3:
-                    case 4:
                         map[i][j] = new Tierra();
+                        break;
+                    case 4:
+                        map[i][j] = new Arbol();
                         break;
                     default:
                         System.out.println("Smth went wrong");
