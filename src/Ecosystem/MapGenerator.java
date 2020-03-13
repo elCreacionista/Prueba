@@ -35,17 +35,14 @@ public class MapGenerator {
     }
 
 
-
-
-
     public int[][] getMapa(){
         return this.mapa;
     }
 
-    public int[][] GenerateMapa() {
+    private void GenerateMapa() {
         mapascreados++;
         System.out.println("Mapa numero: " + mapascreados);
-        this.mapa = new int[x][y];
+        this.mapa = new int[x + 2][y + 2];
         int altura = 0;
 
         //GENERAR MAPA
@@ -116,10 +113,10 @@ public class MapGenerator {
             }
         }
         //GENERADOR DE MONTAÑAS
-        crearMontes(100, 300);
+        crearMontes(10, 30);
 
         //GENERADOR DE BOSQUES
-        crearBosques(5, 3);
+        crearBosques(3, 2);
 
         //ESTABILIZADOR DE TERRENO
         for (int i = 0; i < x; i++) {
@@ -135,11 +132,11 @@ public class MapGenerator {
             }
         }
 
+        //PARETS
+        endMap();
+
         //RIOS
         crearRios(10);
-
-
-        return this.mapa;
     }
 
     private void crearBosques(double cant_bosques, double tamanio_bosques) {
@@ -399,5 +396,15 @@ public class MapGenerator {
         }
     }
 
+    private void endMap(){
+        for (int i = 0; i < this.mapa.length ; i++) {
+            mapa[i][0] = -1;
+            mapa[i][mapa[0].length - 1] = -1;
+        }
+        for (int j = 0; j < this.mapa[0].length ; j++) {
+            mapa[0][j] = -1;
+            mapa[mapa.length - 1][j] = -1;
+        }
+    }
 
 }

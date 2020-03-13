@@ -23,16 +23,20 @@ public abstract class Animal {
     float vista; //3
 
     boolean male, female;
+    Ecosistem ecosistem;
 
 
-    Timer life = new Timer(100, new ActionListener() {
+    Timer life = new Timer(1000, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             passTime();
+            move();
+            eat();
         }
     });
 
-    Animal(Point point){
+    Animal(Point point, Ecosistem ecosistem){
+        this.ecosistem = ecosistem;
         this.point = point;
         this.hunger = 0;
         this.thirst = 0;
@@ -43,6 +47,7 @@ public abstract class Animal {
         this.life.start();
     }
     Animal(Animal animal1, Animal animal2){
+        this.ecosistem = animal1.ecosistem;
         this.point = animal1.point;
         this.hunger = 0;
         this.thirst = 0;
@@ -94,13 +99,69 @@ public abstract class Animal {
         this.hunger += indexhunger;
         this.thirst += indexthrist;
         this.reproduceurgue += indexreproductiontime;
+        if (hunger >= 1 || thirst >= 1){
+            life.stop();
+            ecosistem.removeAnimal(this);
+        }
     }
     public abstract void move();
     public abstract void eat();
     public abstract void drink();
     public abstract Animal reproduce(Animal animal);
     public float[] generateRandomAdn(){
-        return new float[]{(float) (Math.random()*1), (float) (Math.random()*1), (float) (Math.random()*1),(float) (Math.random()*1)};
+        return new float[]{(float) (Math.random()*0.1), (float) (Math.random()*0.1), (float) (Math.random()*0.1),(float) (Math.random()*0.1)};
     }
+    public int getDistancia(Point inicio, Point destino){
+        int distancia = 0;
+        if (inicio.equals(destino))
+            return 0;
+
+        if (destino.x < inicio.x )
+            distancia += inicio.x - destino.x;
+        else
+            distancia += destino.x - inicio.x;
+
+        if (destino.y < inicio.y )
+            distancia += inicio.y - destino.y;
+        else
+            distancia += destino.y - inicio.y;
+
+        return distancia;
+    }
+
+    public Point goTo(Point objetive){
+        if (getDistancia(this.point, objetive) == 1)
+            return this.point;
+        Point camino = this.point;
+        while (getDistancia(camino, objetive) > 1) {
+            if (ecosistem.territorio[this.point.x + 1][this.point.y] instanceof Tierra && getDistancia(new Point(this.point.x + 1, this.point.y), objetive) < getDistancia(new Point(this.point.x, this.point.y), objetive))
+                return new Point(this.point.x + 1, this.point.y);
+
+            if (ecosistem.territorio[this.point.x - 1][this.point.y] instanceof Tierra && getDistancia(new Point(this.point.x - 1, this.point.y), objetive) < getDistancia(new Point(this.point.x, this.point.y), objetive))
+                return new Point(this.point.x - 1, this.point.y);
+
+            if (ecosistem.territorio[this.point.x][this.point.y + 1] instanceof Tierra && getDistancia(new Point(this.point.x, this.point.y + 1), objetive) < getDistancia(new Point(this.point.x, this.point.y), objetive))
+                return new Point(this.point.x, this.point.y + 1);
+
+            if (ecosistem.territorio[this.point.x][this.point.y - 1] instanceof Tierra && getDistancia(new Point(this.point.x, this.point.y - 1), objetive) < getDistancia(new Point(this.point.x, this.point.y), objetive))
+                return new Point(this.point.x, this.point.y - 1);
+
+
+            if (ecosistem.territorio[this.point.x + 1][this.point.y] instanceof Tierra)
+                return new Point(this.point.x + 1, this.point.y);
+
+            if (ecosistem.territorio[this.point.x - 1][this.point.y] instanceof Tierra)
+                return new Point(this.point.x - 1, this.point.y);
+
+            if (ecosistem.territorio[this.point.x][this.point.y + 1] instanceof Tierra)
+                return new Point(this.point.x, this.point.y + 1);
+
+            if (ecosistem.territorio[this.point.x][this.point.y - 1] instanceof Tierra)
+                return new Point(this.point.x, this.point.y - 1);
+
+        }
+        return this.point;
+    }
+
 
 }

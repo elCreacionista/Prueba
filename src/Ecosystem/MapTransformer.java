@@ -2,6 +2,7 @@ package Ecosystem;
 
 public class MapTransformer {
     private MapGenerator mg;
+
     public MapTransformer(MapGenerator mg){
         this.mg = mg;
     }

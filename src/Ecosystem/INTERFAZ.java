@@ -59,7 +59,6 @@ public class INTERFAZ extends JFrame {
             for (int j = 0; j < ecosistem.territorio[0].length - 1; j++) {
 
                 if (losAnimales(i, j, ecosistem)) {
-                    System.out.println(i + "  " + j);
                 } else UnJL(i, j, ecosistem);
 
             }
@@ -69,15 +68,17 @@ public class INTERFAZ extends JFrame {
     public boolean losAnimales(int i, int j, Ecosistem ecosistemº) {
 
         for (int k = 0; k < ecosistem.wolves.size(); k++) {
-            if (ecosistem.wolves.get(i).point.equals(new Point(i, j)))
+            if (ecosistem.wolves.get(k).point.equals(new Point(i, j))) {
                 label[i][j].setBackground(new Color(200, 100, 0));
-            return true;
+                return true;
+            }
         }
 
         for (int k = 0; k < ecosistem.rabits.size(); k++) {
-            if (ecosistem.rabits.get(i).point.equals(new Point(i, j)))
+            if (ecosistem.rabits.get(k).point.equals(new Point(i, j))) {
                 label[i][j].setBackground(new Color(200, 200, 0));
-            return true;
+                return true;
+            }
         }
 
         return false;

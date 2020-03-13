@@ -5,8 +5,8 @@ import java.awt.*;
 public class Wolf extends Animal{
 
 
-    Wolf(Point point) {
-        super(point);
+    Wolf(Point point, Ecosistem ecosistem) {
+        super(point, ecosistem);
     }
 
     Wolf(Animal animal1, Animal animal2) {
