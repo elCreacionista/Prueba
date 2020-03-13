@@ -76,7 +76,10 @@ public class INTERFAZ extends JFrame {
 
         for (int k = 0; k < ecosistem.rabits.size(); k++) {
             if (ecosistem.rabits.get(k).point.equals(new Point(i, j))) {
-                label[i][j].setBackground(new Color(200, 200, 0));
+                if (ecosistem.rabits.get(k).male)
+                label[i][j].setBackground(new Color(10, 100, 100));
+                else
+                    label[i][j].setBackground(new Color(100, 10, 0));
                 return true;
             }
         }

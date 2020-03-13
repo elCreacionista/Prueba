@@ -120,16 +120,16 @@ public abstract class Animal {
     Point searchWater(){
         Map<Integer,Point> distancias = new HashMap<>();
 
-        int x = this.point.x - 5;
-        if (this.point.x < 5)
+        int x = this.point.x - 4;
+        if (this.point.x < 4)
             x = 0;
-        if (this.point.x > ecosistem.territorio.length - 5)
-            x = ecosistem.territorio.length - 10;
-        int y = this.point.y - 5;
-        if (this.point.y < 5)
+        if (this.point.x > ecosistem.territorio.length - 4)
+            x = ecosistem.territorio.length - 9;
+        int y = this.point.y - 4;
+        if (this.point.y < 4)
             y = 0;
-        if (this.point.x > ecosistem.territorio[0].length - 5)
-            y = ecosistem.territorio[0].length - 10;
+        if (this.point.x > ecosistem.territorio[0].length - 4)
+            y = ecosistem.territorio[0].length - 9;
 
         for (int i = x; i < x + 9 ; i++) {
             for (int j = y; j < y + 9; j++) {

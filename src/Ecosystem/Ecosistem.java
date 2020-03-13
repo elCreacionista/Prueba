@@ -32,12 +32,15 @@ Timer time = new Timer(1000, new ActionListener() {
     }
     public void rabitReproduction(){
         for (int i = 0; i < this.rabits.size() ; i++) {
-            for (int j = 0; j <this.rabits.size() ; j++) {
-                if (!this.rabits.get(i).equals(this.rabits.get(j))){
-                    if (this.rabits.get(i).point.equals(this.rabits.get(j).point) && this.rabits.get(i).female == this.rabits.get(i).male)
-                        System.out.println("new animal");
-                        addAnimal(new Rabbit(this.rabits.get(i) ,this.rabits.get(j)));
-                        return;
+            for (int j = 0; j < this.rabits.size(); j++) {
+                if (!this.rabits.get(i).equals(this.rabits.get(j))) {
+                    if (this.rabits.get(i).point.equals(this.rabits.get(j).point) && this.rabits.get(i).female == this.rabits.get(j).male &&
+                            (this.rabits.get(i).reproduceurgue < 1 && this.rabits.get(j).reproduceurgue < 1))
+                        this.rabits.get(i).reproduceurgue = 0;
+                    this.rabits.get(j).reproduceurgue = 0;
+                    System.out.println("new animal");
+                    addAnimal(new Rabbit(this.rabits.get(i), this.rabits.get(j)));
+                    return;
                 }
             }
 
