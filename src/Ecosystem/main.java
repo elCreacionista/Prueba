@@ -4,12 +4,10 @@ import java.awt.*;
 
 public class main {
     public static void main(String[] args) {
-        Ecosistem eco = new Ecosistem(40,40);
-        eco.addAnimal(new Rabbit(new Point(15,15), eco));
-        eco.addAnimal(new Rabbit(new Point(16,1), eco));
-        eco.addAnimal(new Rabbit(new Point(17,20), eco));
-        eco.addAnimal(new Rabbit(new Point(3,35), eco));
-        eco.addAnimal(new Rabbit(new Point(9,1), eco));
+        Ecosistem eco = new Ecosistem(50,50);
+        for (int i = 0; i < 10 ; i++) {
+            eco.addAnimal(new Rabbit(eco));
+        }
 
         new INTERFAZ(eco);
     }

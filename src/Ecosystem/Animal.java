@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class Animal {
     Point point;
@@ -32,12 +34,19 @@ public abstract class Animal {
             passTime();
             move();
             eat();
+            drink();
         }
     });
 
-    Animal(Point point, Ecosistem ecosistem){
+    Animal(Ecosistem ecosistem){
+        int randX = (int)(Math.random() * ecosistem.territorio.length);
+        int randY = (int)(Math.random() * ecosistem.territorio[0].length);
+        while (!(ecosistem.territorio[randX][randY] instanceof Tierra)){
+            randX = (int)(Math.random() * ecosistem.territorio.length);
+            randY = (int)(Math.random() * ecosistem.territorio[0].length);
+        }
+        this.point = new Point(randX, randY);
         this.ecosistem = ecosistem;
-        this.point = point;
         this.hunger = 0;
         this.thirst = 0;
         this.reproduceurgue = 0;
@@ -61,7 +70,7 @@ public abstract class Animal {
 
     public float[] combinateAdn(Animal animal1, Animal animal2){
         float[] adn = new float[animal1.adn.length];
-        for (int i = 0; i < this.adn.length; i++) {
+        for (int i = 0; i < adn.length; i++) {
             if (animal1.adn[i] != animal2.adn[i]){
                 switch ((int)(Math.random()*2)){
                     case 0: adn[i] = animal1.adn[i];break;
@@ -99,7 +108,7 @@ public abstract class Animal {
         this.hunger += indexhunger;
         this.thirst += indexthrist;
         this.reproduceurgue += indexreproductiontime;
-        if (hunger >= 1 || thirst >= 1){
+        if (hunger >= 1 || thirst >= 1 || ecosistem.territorio[this.point.x][this.point.y] instanceof Agua) {
             life.stop();
             ecosistem.removeAnimal(this);
         }
@@ -107,6 +116,35 @@ public abstract class Animal {
     public abstract void move();
     public abstract void eat();
     public abstract void drink();
+
+    Point searchWater(){
+        Map<Integer,Point> distancias = new HashMap<>();
+
+        int x = this.point.x - 5;
+        if (this.point.x < 5)
+            x = 0;
+        if (this.point.x > ecosistem.territorio.length - 5)
+            x = ecosistem.territorio.length - 10;
+        int y = this.point.y - 5;
+        if (this.point.y < 5)
+            y = 0;
+        if (this.point.x > ecosistem.territorio[0].length - 5)
+            y = ecosistem.territorio[0].length - 10;
+
+        for (int i = x; i < x + 9 ; i++) {
+            for (int j = y; j < y + 9; j++) {
+                if (ecosistem.territorio[i][j] instanceof Agua){
+                    distancias.put(getDistancia(this.point, new Point(i,j)), new Point(i,j));
+                }
+            }
+        }
+        for (int i = 0; i < 1000; i++) {
+            if (distancias.containsKey(i))
+                return distancias.get(i);
+        }
+        return this.point;
+    }
+
     public abstract Animal reproduce(Animal animal);
     public float[] generateRandomAdn(){
         return new float[]{(float) (Math.random()*0.1), (float) (Math.random()*0.1), (float) (Math.random()*0.1),(float) (Math.random()*0.1)};

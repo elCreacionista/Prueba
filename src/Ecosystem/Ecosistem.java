@@ -16,7 +16,8 @@ Timer time = new Timer(1000, new ActionListener() {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         generatePlants();
-        System.out.println("Ecosistem actualizado");
+        rabitReproduction();
+        System.out.println("Cantidad de conejos: " + rabits.size());
     }
 });
 
@@ -28,6 +29,19 @@ Timer time = new Timer(1000, new ActionListener() {
         generatePlants();
         time.start();
 
+    }
+    public void rabitReproduction(){
+        for (int i = 0; i < this.rabits.size() ; i++) {
+            for (int j = 0; j <this.rabits.size() ; j++) {
+                if (!this.rabits.get(i).equals(this.rabits.get(j))){
+                    if (this.rabits.get(i).point.equals(this.rabits.get(j).point))
+                        System.out.println("new animal");
+                        addAnimal(new Rabbit(this.rabits.get(i) ,this.rabits.get(j)));
+                        return;
+                }
+            }
+
+        }
     }
     public void addAnimal(Animal animal){
         if (animal instanceof Rabbit){
